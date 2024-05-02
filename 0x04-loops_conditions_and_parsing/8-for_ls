@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Using a for loop to display the content of the current directory
+# Displaying only the part of the name after the first dash for each file
+
+for file in *
+do
+	if [[ -f "$file" && ! "$file" == .* ]];
+	then
+		name=$(basename "$file")
+		dash_name=$(echo "$name" | cut -d '-' -f 2-)
+		echo "$dash_name"
+	fi
+done
