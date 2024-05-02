@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
-# using while loop to repeat out 10X
+# Using a while loop to repeat "Best School" 10 times
+# Display "Hi" on a new line for the 9th iteration
 
 num=1
 
-while ((num<10))
+while ((num <= 10))
 do
-	if [ "$num" == 9 ]
+	if ((num == 9))
 	then
-		echo Hi 
-	fi 
-	echo Best School 
-	num=$((num+1))
+		echo "Best School"
+		echo "Hi"
+	else
+		echo "Best School"
+	fi
+	((num++))
 done
