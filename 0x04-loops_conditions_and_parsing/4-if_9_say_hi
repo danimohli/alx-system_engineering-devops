@@ -9,7 +9,7 @@ do
 	then
 		echo "Best School"
 	else
-		echo "Hi"
+		echo Hi
 	fi
 	((num += 1))
 done
