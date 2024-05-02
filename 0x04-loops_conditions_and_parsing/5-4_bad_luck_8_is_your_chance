@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Using a while loop to repeat "Best School" 10 times
+# Display "Hi" on a new line for the 9th iteration
+
+num=1
+
+while ((num <= 10))
+do
+	if ((num == 4))
+	then
+		echo "bad luck"
+	elif ((num == 8))
+	then
+		echo "good luck"
+	else
+		echo "Best School"
+	fi
+	((num++))
+done
