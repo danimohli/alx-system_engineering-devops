@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# using while loop to repeat out 10X
+
+num=10
+
+until [ $num -le 0 ]
+do
+	echo "Best School"
+	((num -= 1))
+done
