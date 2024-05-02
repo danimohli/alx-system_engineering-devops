@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Using a while loop to display numbers from 1 to 20
+# Display "bad luck" messages for specific iterations using a case statement
+
+num=1
+
+while ((num <= 20))
+do
+	case $num in
+		4)
+			echo "$num"
+			echo "bad luck from China"
+			;;
+		9)
+			echo "$num"
+			echo "bad luck from Japan"
+			;;
+		17)
+			echo "$num"
+			echo "bad luck from Italy"
+			;;
+		*)
+			echo $num
+			;;
+	esac
+	((num++))
+done
