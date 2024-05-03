@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Stopping the "to_infinity_and_beyond" process using kill
+
+# First, let's find the process ID (PID)
+pid=$(pgrep -f "4-to_infinity_and_beyond")
+
+# Check if the process ID is not empty
+if [ -n "$pid" ]
+then
+	# If the process ID is found, use kill to stop the process
+	kill "$pid"
+fi
