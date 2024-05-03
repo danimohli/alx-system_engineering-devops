@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# behead a process
+pkill -SIGKILL -f "highlander"
