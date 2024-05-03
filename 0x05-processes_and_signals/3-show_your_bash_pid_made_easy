@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Output bash pid without using ps
+
+pgrep -l 'bash'
