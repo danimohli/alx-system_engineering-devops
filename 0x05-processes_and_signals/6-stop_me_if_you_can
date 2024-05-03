@@ -8,5 +8,5 @@ pid=$(pgrep -f "4-to_infinity_and_beyond")
 if [ -n "$pid" ]
 then
 	# If the process ID is found, use pkill to stop the process
-	pkill -P "$pid"
+	pkill -f "$pid"
 fi
