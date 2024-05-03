@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Stopping the "to_infinity_and_beyond"
 
-pkill -f --infinity
+pkill -f infinity
