@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# command to list lstening or active port/socket
+sudo netstat -lp
