@@ -1,0 +1,33 @@
+Explanation of Components
+Load Balancer (HAProxy):
+
+Purpose: Distributes incoming traffic across multiple web servers to ensure no single server becomes overwhelmed. This improves reliability and scalability.
+Distribution Algorithm: The load balancer uses a Round Robin algorithm, which cycles through each server in the pool sequentially. This ensures an even distribution of traffic.
+Active-Active vs. Active-Passive:
+Active-Active: All servers are active and handle traffic simultaneously. This increases resource utilization and fault tolerance.
+Active-Passive: One server is active and handles traffic, while the other is on standby. If the active server fails, the passive one takes over. This setup is less resource-efficient but can be simpler to manage.
+Web Servers (Nginx):
+
+Purpose: Handle incoming HTTP/HTTPS requests, serve static content, and forward dynamic requests to the application server.
+Application Server:
+
+Purpose: Runs the application code, processes requests forwarded by the web servers, executes business logic, and interacts with the database.
+Database (MySQL):
+
+Primary-Replica (Master-Slave) Cluster:
+Primary Node: Handles all write operations and replicates data to the replica node(s). It ensures data consistency and integrity.
+Replica Node: Handles read operations to offload the primary node and improve performance. It receives data updates from the primary node asynchronously.
+Difference: The primary node is the source of truth for data and handles writes, while the replica node provides read redundancy and improves read performance.
+Issues with This Infrastructure
+Single Points of Failure (SPOF):
+
+Load Balancer: If the load balancer fails, the entire website becomes unreachable. A redundant load balancer setup could mitigate this risk.
+Database Primary Node: If the primary node fails, write operations are disrupted. A failover mechanism to promote a replica to primary can help mitigate this.
+Security Issues:
+
+No Firewall: Without a firewall, the servers are vulnerable to unauthorized access and attacks.
+No HTTPS: Without HTTPS, data transmitted between the user's browser and the server is not encrypted, exposing it to interception.
+No Monitoring:
+
+Without monitoring, it is difficult to detect and respond to issues promptly. Monitoring helps track performance, detect anomalies, and trigger alerts for potential problems.
+
