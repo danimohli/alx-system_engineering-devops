@@ -1,0 +1,65 @@
+<h1>Detailed Explanation of Components:</h1>
+
+<ol>
+<li>Server:</li>
+
+<p>A server is a powerful computer that provides data, services, or programs to other computers (clients) over a network.</p>
+<p>In this setup, it hosts the entire web infrastructure.</p>
+
+<li>Role of Domain Name:</li>
+
+<p>The domain name "foobar.com" is an easy-to-remember address that users can type into their browsers to access the website.</p>
+<p>It maps to the server's IP address using DNS.</p>
+
+<li>Type of DNS Record:</li>
+
+<p>The www in www.foobar.com is typically an A (Address) record, which maps the domain name to the server's IP address, 8.8.8.8.</p>
+
+<li>Role of the Web Server (Nginx):</li>
+
+<p>The web server (Nginx) handles incoming HTTP/HTTPS requests from users.</p>
+<p>It serves static content directly and forwards dynamic requests to the application server.</p>
+
+<li>Role of the Application Server:</li>
+
+<p>The application server runs the application code, processes requests from the web server, executes business logic, and interacts with the database to fetch or store data.</p>
+
+<li>Role of the Database (MySQL):</li>
+
+<p>The database stores all the persistent data required by the application, such as user accounts, content, and other information.</p>
+<li>Communication:</li>
+
+<p>The server communicates with the user’s computer using HTTP/HTTPS protocols over the internet.</p>
+<p>The user's browser sends a request, which is routed to the server, and the server responds with the requested content.</p>
+</ul>
+
+<h2>Issues with This Infrastructure:<h2>
+
+Single Point of Failure (SPOF):
+
+Since everything is hosted on a single server, if the server goes down, the entire website becomes unavailable.
+Downtime for Maintenance:
+
+During maintenance or updates (e.g., deploying new code or restarting the web server), the website will experience downtime.
+Scalability:
+
+This setup cannot easily handle a large amount of traffic. If there is a sudden surge in visitors, the server might become overwhelmed, leading to slow performance or crashes.
+
+
+
+User's Browser
+       |
+       v
+[DNS: www.foobar.com -> 8.8.8.8]
+       |
+       v
+    [Server: 8.8.8.8]
+       |
+       v
+    [Nginx (Web Server)]
+       |
+       v
+  [Application Server]
+       |
+       v
+     [Database (MySQL)]
