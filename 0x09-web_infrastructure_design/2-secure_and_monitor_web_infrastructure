@@ -1,0 +1,40 @@
+Explanation of Components:
+Firewalls:
+
+Purpose: Protect each server by filtering incoming and outgoing traffic based on predetermined security rules. This helps in preventing unauthorized access and potential attacks.
+Placement: Each server has its own firewall to ensure all network traffic is monitored and controlled.
+SSL Certificate:
+
+Purpose: Encrypts data transmitted between the user's browser and the web server to ensure privacy and security. HTTPS helps in protecting against eavesdropping and man-in-the-middle attacks.
+Monitoring Tool:
+
+Purpose: Collects and analyzes data about the system's performance and health. It helps in identifying issues, tracking performance metrics, and ensuring the system is running smoothly.
+Data Collection: Monitoring clients (e.g., Sumologic agents) collect logs, metrics, and other performance data from each server. This data is sent to a central monitoring service for analysis and visualization.
+Specific Explanations:
+Firewalls:
+
+Role: Block unauthorized access, protect against attacks, and ensure only legitimate traffic reaches the servers.
+HTTPS Traffic:
+
+Importance: Encrypts data to prevent interception, ensuring secure communication between users and the server. It also helps in building user trust and improving SEO rankings.
+Monitoring:
+
+Purpose: Provides real-time insights into the health and performance of the infrastructure. Helps in proactive issue detection and resolution.
+Data Collection: Monitoring clients on each server gather data such as CPU usage, memory usage, disk I/O, network traffic, and application logs. This data is sent to a centralized monitoring system for analysis.
+Monitoring QPS (Queries Per Second):
+
+Process: Configure the monitoring tool to track the number of queries processed by the web servers. This involves setting up custom metrics or using built-in metrics to capture QPS data.
+Issues with This Infrastructure:
+Terminating SSL at the Load Balancer:
+
+Issue: If SSL termination occurs at the load balancer, the traffic between the load balancer and the web servers is not encrypted. This could be a security risk, especially in public or untrusted networks.
+Solution: Implement end-to-end encryption by using HTTPS between the load balancer and the web servers.
+Single MySQL Server for Writes:
+
+Issue: Having only one MySQL server capable of accepting writes creates a single point of failure (SPOF) for write operations. If this server fails, all write operations are halted.
+Solution: Implement a MySQL cluster with multiple write nodes or use replication with automatic failover mechanisms.
+Identical Components on All Servers:
+
+Issue: If all servers host the web server, application server, and database, it can lead to resource contention and complicate scaling and maintenance.
+Solution: Separate the concerns by dedicating specific servers for specific roles. For instance, have dedicated web/application servers and separate database servers. This improves performance, simplifies scaling, and enhances fault isolation.
+Conclusion:
