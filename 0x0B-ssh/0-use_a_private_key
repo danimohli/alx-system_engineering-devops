@@ -1,10 +1,3 @@
-#!/bin/env bash
-
-# Variables
-
-HOST="100.26.221.187"
-USER="ubuntu"
-KEY="~/.ssh/school"
-
-# Connect to the server using ssh
-ssh -i $KEY $USER@$HOST
+#!/usr/bin/env bash
+# Use Bash script with ssh to connect to server
+ssh -i ~/.ssh/school ubuntu@100.26.221.187
