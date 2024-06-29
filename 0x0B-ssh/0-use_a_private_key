@@ -1,0 +1,10 @@
+#!/bin/env bash
+
+# Variables
+
+HOST="100.26.221.187"
+USER="ubuntu"
+KEY="~/.ssh/school"
+
+# Connect to the server using ssh
+ssh -i $KEY $USER@$HOST
