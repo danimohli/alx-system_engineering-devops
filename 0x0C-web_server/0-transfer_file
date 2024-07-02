@@ -19,10 +19,4 @@ PATH_TO_SSH_KEY=$4
 
 # Transfer the file using scp with strict host key checking disabled
 scp -i "$PATH_TO_SSH_KEY" -o StrictHostKeyChecking=no "$PATH_TO_FILE" "$USERNAME@$IP:~/"
-
-# Check if scp was successful
-if [ $? -eq 0 ]; then
-    echo "File transferred successfully."
-else
-    echo "File transfer failed."
 fi
