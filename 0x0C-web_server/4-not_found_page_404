@@ -1,39 +1,32 @@
 #!/usr/bin/env bash
-# Ensure the script is run as root
+# Configures a new ubuntu machine by installing
+# Nginx where it should be listening on port 80
 
-# Update package list and install nginx
-sudo apt-get update -y
-sudo apt-get install -y nginx
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+	 sudo apt-get install nginx -y
 
-# Create an HTML file with "Hello World!" content
-echo "Hello World!" > /var/www/html/index.html
+# starting service
+sudo service nginx start
 
-# Create the custom 404 error page
-echo "Ceci n'est pas une page" > /var/www/html/404.html
+# allowing nginx on firewall
+sudo ufw allow 'Nginx HTTP'
 
-# Configure Nginx to redirect /redirect_me to another page with a 301 status
-# and to use the custom 404 error page
-cat <<EOL > /etc/nginx/sites-available/default
-server {
-    listen 80;
+# Give the user ownership to website files for easy editing
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
 
-    # Root location
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
+# Backup default index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
-    # Redirection configuration
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
+# Creating  index
+echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
 
-    # Custom 404 error page
-    error_page 404 /404.html;
-    location = /404.html {
-        internal;
-    }
-}
-EOL
+# /redirect_me to a youtube 
+sudo sed -i '24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
 
-# Restart Nginx to apply changes without using systemctl
-service nginx restart
+echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
+sudo sed -i '25i\	error_page 404 /error_404.html;' /etc/nginx/sites-available/default
+
+# Restarting nginx
+sudo service nginx restart
