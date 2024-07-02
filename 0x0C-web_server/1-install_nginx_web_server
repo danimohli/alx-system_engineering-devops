@@ -7,11 +7,6 @@ apt-get install -y nginx
 # Create an HTML file with "Hello World!" content
 echo "Hello World!" > /var/www/html/index.html
 
-# Modify Nginx configuration to ensure it listens on port 80
-# Note: Nginx listens on port 80 by default
-# So this step may be redundant but included for completeness
-sed -i 's/listen 80 default_server;/listen 80 default_server;/' /etc/nginx/sites-available/default
-
 # Restart Nginx to apply changes without using systemctl
 service nginx start
 fi
