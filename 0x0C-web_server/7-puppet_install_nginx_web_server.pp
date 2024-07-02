@@ -1,55 +1,24 @@
-# Puppet manifest to install and configure Nginx
+# Script to install nginx using puppet
 
-# Ensure the nginx package is installed
-package { 'nginx':
-  ensure => installed,
+package {'nginx':
+  ensure => 'present',
 }
 
-# Ensure the nginx service is running and enabled
-service { 'nginx':
-  ensure    => running,
-  enable    => true,
-  subscribe => File['/etc/nginx/sites-available/default'],
+exec {'install':
+  command  => 'sudo apt-get update ; sudo apt-get -y install nginx',
+  provider => shell,
 }
 
-# Create the Hello World page
-file { '/var/www/html/index.html':
-  ensure  => file,
-  content => 'Hello World!',
+exec {'Holberton':
+  command  => 'echo "Holberton School" | sudo tee /var/www/html/index.html',
+  provider => shell,
 }
 
-# Create the 404 error page
-file { '/var/www/html/404.html':
-  ensure  => file,
-  content => "Ceci n'est pas une page",
+exec {'sudo sed -i "s/listen 80 default_server;/listen 80 default_server;\\n\\tlocation \/redirect_me {\\n\\t\\treturn 301 https:\/\/www.youtube.com\/;\\n\\t}/" /etc/nginx/sites-available/default':
+  provider => shell,
 }
 
-# Create the Nginx site configuration
-file { '/etc/nginx/sites-available/default':
-  ensure  => file,
-  content => @("EOF"),
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    root /var/www/html;
-    index index.html;
-
-    server_name _;
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-
-    error_page 404 /404.html;
-    location = /404.html {
-        internal;
-    }
-}
-| EOF
-  notify  => Service['nginx'],
+exec {'run':
+  command  => 'sudo service nginx restart',
+  provider => shell,
 }
