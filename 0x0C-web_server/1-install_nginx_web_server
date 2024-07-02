@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 # Update package list and install nginx
 
-sudo su
-apt-get update
-apt-get install -y nginx
+sudo apt-get update -y -qq &&
+	sudo apt-get install -y nginx
 
 # Create an HTML file with "Hello World!" content
 echo "Hello World!" > /var/www/html/index.html
