@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Update package list and install nginx
 
-# apt-get update -y
+apt-get update
 apt-get install -y nginx
 
 # Create an HTML file with "Hello World!" content
@@ -13,5 +13,5 @@ echo "Hello World!" > /var/www/html/index.html
 sed -i 's/listen 80 default_server;/listen 80 default_server;/' /etc/nginx/sites-available/default
 
 # Restart Nginx to apply changes without using systemctl
-service nginx restart
+service nginx start
 fi
