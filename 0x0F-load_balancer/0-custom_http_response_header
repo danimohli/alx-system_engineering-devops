@@ -1,31 +1,35 @@
 #!/usr/bin/env bash
-# This script installs and configures Nginx on a web server and sets a custom HTTP response header
+# configures a new Ubuntu machine
 
-# Update package list and install Nginx
-sudo apt-get update -y
-sudo apt-get install -y nginx
+# Update package list and install nginx
+apt-get -y update
+apt-get -y install nginx
 
-# Start Nginx and enable it to start on boot
-sudo systemctl start nginx
-sudo systemctl enable nginx
+# Add custom response header to know the server name for debugging
+HOST_NAME=$(hostname)
+HEADER="add_header X-Served-By $HOST_NAME;"
+FIND=$(grep "add_header X-Served-By" /etc/nginx/sites-available/default)
+if [[ -z $FIND ]]; then
+    sed -i "/server_name _;/a \\t$HEADER" /etc/nginx/sites-available/default
+fi
 
-# Create a custom configuration file for Nginx
-sudo tee /etc/nginx/conf.d/custom_header.conf <<EOL
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
+# Create a first index.html page
+echo "Hello World!" > /var/www/html/index.html
 
-    root /var/www/html;
-    index index.html index.htm index.nginx-debian.html;
+# Add to the nginx configuration file a redirection to another page
+FIND=$(grep "location /redirect_me" /etc/nginx/sites-available/default)
+STRING="location /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=3MbaGJN2ioQ;\n\t}"
+if [[ -z $FIND ]]; then
+    sed -i "/server_name _;/a \\t$STRING" /etc/nginx/sites-available/default
+fi
 
-    server_name _;
+# Add to the nginx configuration file a custom 404 error page
+FIND=$(grep "error_page 404" /etc/nginx/sites-available/default)
+ERROR="error_page 404 /custom_404.html;"
+if [[ -z $FIND ]]; then
+    echo "Ceci n'est pas une page" > /var/www/html/custom_404.html
+    sed -i "/server_name _;/a \\t$ERROR" /etc/nginx/sites-available/default
+fi
 
-    location / {
-        add_header X-Served-By \$hostname;
-        try_files \$uri \$uri/ =404;
-    }
-}
-EOL
-
-# Reload Nginx to apply the changes
-sudo systemctl reload nginx
+# Restart nginx to apply the changes
+service nginx restart
