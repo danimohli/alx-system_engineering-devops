@@ -1,34 +1,15 @@
 #!/usr/bin/env bash
-# This script configures a new Ubuntu machine with Nginx, adds a custom response header, creates a default index page, sets up a redirection, and configures a custom 404 error page.
+# This script configures a new Ubuntu machine with Nginx
 
-# Update package list and install Nginx
-apt-get -y update
-apt-get -y install nginx
-
-# Get the hostname of the server
-HOST_NAME=$(hostname)
-
-# Add custom response header to Nginx configuration
-HEADER="add_header X-Served-By $HOST_NAME;"
-if ! grep -q "add_header X-Served-By" /etc/nginx/sites-available/default; then
-    sed -i "/server_name _;/a \\t$HEADER" /etc/nginx/sites-available/default
-fi
-
-# Create a default index.html page
-echo "Hello World!" > /var/www/html/index.html
-
-# Add redirection to Nginx configuration
-REDIRECT="location /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=3MbaGJN2ioQ;\n\t}"
-if ! grep -q "location /redirect_me" /etc/nginx/sites-available/default; then
-    sed -i "/server_name _;/a \\t$REDIRECT" /etc/nginx/sites-available/default
-fi
-
-# Add custom 404 error page to Nginx configuration
-ERROR_PAGE="error_page 404 /custom_404.html;"
-if ! grep -q "error_page 404" /etc/nginx/sites-available/default; then
-    echo "Ceci n'est pas une page" > /var/www/html/custom_404.html
-    sed -i "/server_name _;/a \\t$ERROR_PAGE" /etc/nginx/sites-available/default
-fi
-
-# Restart Nginx to apply the changes
-service nginx restart
+sudo apt-get update
+sudo apt-get install nginx -y
+sudo ufw allow 'Nginx HTTP'
+echo "Holberton School" | sudo tee /var/www/html/index.nginx-debian.html
+new_string="listen 80 default_server;\\n\\tlocation \/redirect_me {\\n\\t\\treturn 301 https:\/\/www.youtube.com\/;\\n\\t}"
+sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
+echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/404.html
+new_string="listen 80 default_server;\\nerror_page 404 \/404.html;\\n\\tlocation = \/404.html {\\n\\t\\troot \/usr\/share\/nginx\/html;\\n\\t\\tinternal;\\n\\t}"
+sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
+new_string2="http {\\n\\tadd_header X-Served-By \"$HOSTNAME\";"
+sudo sed -i "s/http {/$new_string2/" /etc/nginx/nginx.conf
+sudo service nginx start
