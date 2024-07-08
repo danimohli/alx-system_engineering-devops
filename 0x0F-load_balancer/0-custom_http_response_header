@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# This script installs and configures Nginx on a web server and sets a custom HTTP response header
+
+# Update package list and install Nginx
+sudo apt-get update -y
+sudo apt-get install -y nginx
+
+# Start Nginx and enable it to start on boot
+sudo systemctl start nginx
+sudo systemctl enable nginx
+
+# Create a custom configuration file for Nginx
+sudo tee /etc/nginx/conf.d/custom_header.conf <<EOL
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        add_header X-Served-By \$hostname;
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOL
+
+# Reload Nginx to apply the changes
+sudo systemctl reload nginx
