@@ -1,5 +1,5 @@
-#!/bin/env bash
-# get Domain
+#!/usr/bin/env bash
+# Script to audit DNS subdomains for a given domain.
 
 DOMAIN="$1"
 SUBDOMAIN="$2"
