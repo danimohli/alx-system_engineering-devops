@@ -1,0 +1,43 @@
+#!/bin/env bash
+# get Domain
+
+DOMAIN="$1"
+SUBDOMAIN="$2"
+
+get_subdomain_info() {
+  local sub="$1"
+  local domain="$2"
+
+  # Get the DNS record information using dig
+  record=$(dig +short "$sub.$domain")
+  
+  if [[ -z "$record" ]]; then
+    echo "The subdomain $sub does not exist"
+    return
+  fi
+
+  # Determine the record type
+  if [[ $record =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    record_type="A"
+  else
+    record_type="CNAME"
+  fi
+
+  echo "The subdomain $sub is a $record_type record and points to $record"
+}
+
+# Check if domain parameter is provided
+if [[ -z "$DOMAIN" ]]; then
+  echo "Usage: $0 <domain> [subdomain]"
+  exit 1
+fi
+
+# If subdomain parameter is provided, get its info
+if [[ -n "$SUBDOMAIN" ]]; then
+  get_subdomain_info "$SUBDOMAIN" "$DOMAIN"
+else
+  # Otherwise, get info for all predefined subdomains
+  for sub in www lb-01 web-01 web-02; do
+    get_subdomain_info "$sub" "$DOMAIN"
+  done
+fi
