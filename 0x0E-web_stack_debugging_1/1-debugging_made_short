@@ -2,9 +2,5 @@
 # Update Nginx configuration to use port 80 instead of 8080
 
 sudo sed -i "s/8080/80/" /etc/nginx/sites-enabled/default
-
-# Restart the Nginx service to apply configuration changes
 sudo service nginx restart
-
-# Clearing the Nginx PID file
 echo "" | sudo dd status=none of=/run/nginx.pid
