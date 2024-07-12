@@ -1,0 +1,5 @@
+#!/bin/env bash
+# Create a symbolic link to enable the default Nginx configuration
+
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
