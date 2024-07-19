@@ -1,3 +1,68 @@
-https://github.com/alex/what-happens-when#the-g-key-is-pressed
+What Happens When You Type https://www.google.com in Your Browser and Press Enter?
 
-https://medium.com/@ddanimoh/what-happens-when-you-type-https-www-google-com-in-your-browser-and-press-enter-50cf4a797013
+Have you ever wondered what magic happens behind the scenes when you type a URL into your browser and hit enter? Let's break down this complex process into simpler steps to understand the various components involved.
+
+1. DNS Request
+
+When you type `https://www.google.com` in your browser, the first step is to resolve the human-readable domain name into an IP address. This process involves:
+
+- Browser Cache: The browser checks if it has the IP address cached.
+- **Operating System Cache**: If not found, it queries the OS cache.
+- Router Cache: The request may be forwarded to your router, which also has a cache.
+- ISP DNS Server: If all caches are empty, the request is sent to your ISP's DNS server.
+- Recursive DNS Lookup: The ISP's DNS server performs a recursive lookup, querying various DNS servers, starting from the root DNS servers, then the TLD (Top-Level Domain) servers, and finally the authoritative DNS servers for `google.com`.
+
+The resolved IP address is then returned to the browser.
+
+2. TCP/IP
+
+With the IP address in hand, the browser initiates a connection to Google's servers. This involves the following steps:
+
+- TCP Handshake: The browser performs a three-way handshake with the server:
+  - SYN: The browser sends a SYN (synchronize) packet to the server.
+  - SYN-ACK: The server responds with a SYN-ACK (synchronize-acknowledge) packet.
+  - ACK: The browser sends an ACK (acknowledge) packet back to the server, establishing a connection.
+
+3. Firewall
+
+Both the client and server may have firewalls that inspect the incoming and outgoing packets to ensure they comply with security rules. Firewalls help protect against malicious traffic and unauthorized access.
+
+4. HTTPS/SSL
+
+To ensure a secure connection, the browser and server establish an HTTPS connection using SSL/TLS. This involves:
+
+- SSL Handshake: During the handshake, the browser and server:
+  - Exchange Certificates**: The server presents its SSL certificate to the browser, verifying its identity.
+  - Agree on Encryption**: They agree on encryption protocols and generate session keys.
+  - Secure Connection**: Encrypted communication is established using the session keys.
+
+5. Load-Balancer
+
+Once a secure connection is established, the request reaches Google's load balancer. The load balancer distributes incoming traffic across multiple web servers to ensure efficient handling and prevent any single server from being overwhelmed.
+
+6. Web Server
+
+The load balancer forwards the request to one of Google's web servers. The web server is responsible for handling HTTP requests, serving static content, and interfacing with application servers if dynamic content is needed.
+
+7. Application Server
+
+For dynamic content, the web server forwards the request to an application server. The application server executes the necessary application logic, processes user requests, and interacts with databases or other services to generate a response.
+
+8. Database
+
+If the request involves data retrieval or storage, the application server queries the database. Google likely uses a distributed database system to manage vast amounts of data efficiently. The database server processes the query and returns the required data to the application server.
+
+9. Response
+
+The application server compiles the response, which includes any necessary data from the database. This response is sent back to the web server, which forwards it to the load balancer. The load balancer then sends the response back to the browser via the established HTTPS connection.
+
+10. Rendering
+
+Finally, the browser receives the response and starts rendering the content. This involves:
+
+Parsing HTML: The browser parses the HTML to construct the DOM (Document Object Model).
+- Fetching Resources: It fetches additional resources like CSS, JavaScript, and images.
+
+Conclusion
+
+Typing `https://www.google.com` and pressing Enter triggers a complex series of events involving DNS resolution, secure connections, load balancing, and server interactions. Each step ensures that the request is efficiently processed and securely delivered, culminating in the seamless experience of browsing the web. Understanding this process not only highlights the intricacies of web architecture but also underscores the collaborative effort of various technologies working together behind the scenes.
