@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Install and configure UFW firewall on web-01
+
+# Update package list and install UFW
+sudo apt-get update
+sudo apt-get install ufw -y
+
+# Allow SSH, HTTP, HTTPS, and alternate HTTP ports
+sudo ufw allow 22/tcp
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 8080/tcp
+
+# Add port redirection rule
+echo '
+*nat
+:PREROUTING ACCEPT [0:0]
+-A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
+COMMIT
+' | sudo tee -a /etc/ufw/before.rules
+
+# Set default policies to deny incoming traffic and allow outgoing traffic
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Enable the firewall
+sudo ufw enable
+
+# Check the status of UFW
+sudo ufw status
