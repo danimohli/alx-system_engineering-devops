@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """
 todo_progress.py
-This script fetches and displays the TODO list progress for
-a given employee ID
+This script fetches and displays the TODO list progress for a given employee ID
 and exports the data to a CSV file.
 """
 
@@ -38,27 +37,25 @@ def export_to_csv(employee_id, username, todo_list):
     with open(filename, mode='w', newline='') as file:
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
         for task in todo_list:
-            writer.writerow([employee_id, username,
-                            task.get('completed'), task.get('title')])
+            writer.writerow([employee_id, username, task.get('completed'), task.get('title')])
 
 
 def main(employee_id):
     """
-    Main function to fetch and display the TODO list
-    progress and export to CSV.
+    Main function to fetch and display the TODO list progress and export to CSV.
     """
-    _name = fetch_employee_name(employee_id)
+    employee_name = fetch_employee_name(employee_id)
     todo_list = fetch_todo_list(employee_id)
 
     total_tasks = len(todo_list)
     done_tasks = [task for task in todo_list if task.get('completed')]
-    number = len(done_tasks)
+    number_of_done_tasks = len(done_tasks)
 
-    print(f"Employee {_name} is done with tasks({number}/{total_tasks}):")
+    print(f"Employee {employee_name} is done with tasks({number_of_done_tasks}/{total_tasks}):")
     for task in done_tasks:
         print(f"\t {task.get('title')}")
 
-    export_to_csv(employee_id, _name, todo_list)
+    export_to_csv(employee_id, employee_name, todo_list)
 
 
 if __name__ == "__main__":
