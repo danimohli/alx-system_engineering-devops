@@ -39,8 +39,7 @@ def main(employee_id):
     done_tasks = [task for task in todo_list if task.get('completed')]
     number_of_done_tasks = len(done_tasks)
 
-    print(f"Employee {employee_name} is done with" +
-          f"tasks({number_of_done_tasks}/{total_tasks}):")
+    print(f"Employee {employee_name} is done with tasks({number_of_done_tasks}/{total_tasks}):")
     for task in done_tasks:
         print(f"\t {task.get('title')}")
 
