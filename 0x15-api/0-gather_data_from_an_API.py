@@ -32,15 +32,14 @@ def main(employee_id):
     """
     Main function to fetch and display the TODO list progress.
     """
-    employee_name = fetch_employee_name(employee_id)
+    employee_na = fetch_employee_name(employee_id)
     todo_list = fetch_todo_list(employee_id)
 
-    total_tasks = len(todo_list)
+    total = len(todo_list)
     done_tasks = [task for task in todo_list if task.get('completed')]
-    number_of_done_tasks = len(done_tasks)
+    number_done = len(done_tasks)
 
-    tast = '{number_of_done_tasks}/{total_tasks}'
-    print(f"Employee {employee_name} is done with tasks(tast):")
+    print(f"Employee {employee_na} is done with tasks({number_done}/{total}):")
     for task in done_tasks:
         print(f"\t {task.get('title')}")
 
