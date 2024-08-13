@@ -1,0 +1,1 @@
+defining endpoints, using HTTP verbs, and performing common read-write operations on data. In this chapter, I’m going to introduce some advanced use and edge cases you may want to consider in order to give your REST API a sound and long-lasting design.
