@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+An API Request to Reddit for possible
+Users queries
+"""
 
 import requests
 
