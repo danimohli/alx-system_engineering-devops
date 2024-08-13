@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 """
-Top ten reddit hot post.
+An API Request to Reddit for querying the top 10 hot posts.
 """
 
 import requests
-
 
 def top_ten(subreddit):
     """
