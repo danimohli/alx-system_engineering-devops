@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-import requests
 """
 An API Request to Reddit for possible Users querie
 """
+import requests
 
 
 def number_of_subscribers(subreddit):
