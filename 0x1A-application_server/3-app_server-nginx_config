@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-# config for nginx rout
 server {
     listen 80;
     server_name 100.26.221.187;  # Replace with your server's IP address
